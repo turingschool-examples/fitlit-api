@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const port = process.env.PORT || 3001;
 const app = express();
+const fs = require('fs');
+
 const users = require('./data/users');
 const activity = require('./data/activity');
 const hydration = require('./data/hydration');
@@ -32,6 +34,18 @@ app.get('/api/v1/hydration', (req, res) => {
 
 app.get('/api/v1/sleep', (req, res) => {
   res.status(200).json(app.locals.sleep);
+});
+
+app.get('/api/v1/users/:userID/latestrun', (req, res) => {
+  const userID = req.params.userID;
+  
+  fs.readFile(`./data/runs/${userID}-user-route.gpx`, 'utf8', (err, data) => {
+    if (err) {
+      return res.status(404).send(`User ID:${userID} does not have any latest run data.`);
+    }
+    res.header('Content-Type', 'application/xml');
+    return res.status(200).send(data);
+  });
 });
 
 
