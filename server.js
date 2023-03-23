@@ -21,19 +21,19 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/api/v1/users', (req, res) => {
-  res.status(200).json(app.locals.users);
+  res.status(200).json({ users: app.locals.users });
 });
 
 app.get('/api/v1/activity', (req, res) => {
-  res.status(200).json(app.locals.activity);
+  res.status(200).json({ activityData: app.locals.activity });
 });
 
 app.get('/api/v1/hydration', (req, res) => {
-  res.status(200).json(app.locals.hydration);
+  res.status(200).json({ hydrationData: app.locals.hydration });
 });
 
 app.get('/api/v1/sleep', (req, res) => {
-  res.status(200).json(app.locals.sleep);
+  res.status(200).json({ sleepData: app.locals.sleep });
 });
 
 app.get('/api/v1/users/:userID/latestrun', (req, res) => {
