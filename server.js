@@ -55,7 +55,7 @@ app.post('/api/v1/sleep', (req, res) => {
   checkUserExists(newSleepEntry.userID, res);
   checkHasAllParams(requiredParams, newSleepEntry, res);
 
-  app.locals.sleep.sleepData.push(newSleepEntry);
+  app.locals.sleep.push(newSleepEntry);
   res.status(201).json(newSleepEntry);
 });
 
@@ -65,7 +65,7 @@ app.post('/api/v1/hydration', (req, res) => {
   checkUserExists(newHydrationEntry.userID, res);
   checkHasAllParams(requiredParams, newHydrationEntry, res);
 
-  app.locals.hydration.hydrationData.push(newHydrationEntry);
+  app.locals.hydration.push(newHydrationEntry);
   res.status(201).json(newHydrationEntry);
 });
 
@@ -75,12 +75,12 @@ app.post('/api/v1/activity', (req, res) => {
   checkUserExists(newActivityEntry.userID, res);
   checkHasAllParams(requiredParams, newActivityEntry, res);
 
-  app.locals.activity.activityData.push(newActivityEntry);
+  app.locals.activity.push(newActivityEntry);
   res.status(201).json(newActivityEntry);
 });
 
 function checkUserExists(userID, response) {
-  const user = users.userData.find(user => user.id === userID)
+  const user = app.locals.users.find(user => user.id === userID)
   if (!user) {
     return response.status(422).json({
       message: `No user found with ID of ${userID}`
